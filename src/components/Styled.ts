@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS } from '../constants';
+import { COLORS, QUERIES } from '../constants';
 
 export const Title = styled.h1`
   font-size: 1.6275rem;
@@ -13,6 +13,13 @@ export const Title = styled.h1`
   span {
     color: ${COLORS.primary.white};
   }
+
+  @media ${QUERIES.tabletAndUp} {
+    font-size: 3rem;
+    text-align: left;
+    line-height: 56px;
+    margin-bottom: 32px;
+  }
 `;
 
 export const Description = styled.p`
@@ -21,6 +28,14 @@ export const Description = styled.p`
   color: ${COLORS.neutral.veryLightGray};
   line-height: 25px;
   margin-bottom: 32px;
+  max-width: 445px;
+  
+  @media ${QUERIES.tabletAndUp} {
+    font-size: 1.125rem;
+    line-height: 28px;
+    text-align: left;
+    margin-right: auto;
+  }
 `;
 
 const Input = styled.input`
@@ -33,8 +48,22 @@ const Input = styled.input`
 
 export const InputEmail = styled(Input)`
   background-color: ${COLORS.primary.gray};
+
+  @media ${QUERIES.tabletAndUp} {
+    padding: 16px 32px;
+    width: 100%;
+  }
 `;
 
 export const RequestButton = styled(Input)`
   background-color: ${COLORS.primary.green};
+  cursor: pointer;
+
+  @media ${QUERIES.tabletAndUp} {
+    position: absolute;
+    top: 50%;
+    right: 4px;
+    transform: translateY(-50%);
+    padding: 12px 32px;
+  }
 `;
