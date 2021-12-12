@@ -20,4 +20,21 @@ export const Description = styled.p`
   text-align: center;
   color: ${COLORS.neutral.veryLightGray};
   line-height: 25px;
+  margin-bottom: 32px;
+`;
+
+const Input = styled.input`
+  outline: none;
+  border: none;
+  padding: 8px 32px;
+  border-radius: 28px;
+  font-size: 0.875rem;
+`;
+
+export const InputEmail = styled(Input)`
+  background-color: ${COLORS.primary.gray};
+`;
+
+export const RequestButton = styled(Input)`
+  background-color: ${COLORS.primary.green};
 `;
