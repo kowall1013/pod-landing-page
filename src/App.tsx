@@ -7,13 +7,13 @@ const Wrapper = styled.div`
   min-height: 200%;
 `;
 
-
 function App() {
   return (
     <Wrapper>
       <GlobalStyles />
       <PodcastPage />
     </Wrapper>
+
   );
 }
 

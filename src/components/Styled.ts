@@ -68,7 +68,7 @@ export const RequestButton = styled(Input)`
   @media ${QUERIES.tabletAndUp} {
     position: absolute;
     top: 50%;
-    right: 24px;
+    right: 4px;
     transform: translateY(-50%);
     padding: 12px 32px;
   }

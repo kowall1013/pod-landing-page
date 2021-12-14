@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { COLORS, QUERIES } from '../constants';
 import SocialIcons from './SocialIcons';
+import MessageEmialDisplay from './MessageEmialDisplay';
 import { Title, Description, InputEmail, RequestButton } from './Styled';
 
 const SectionWrapperMobile = styled.section`
@@ -124,23 +125,20 @@ const ImageDesktopWrapper = styled.div`
   }
 `;
 
-const EmailError = styled.span`
-  color: hsla(0, 96%, 61%, 1);
-  font-size: 0.75rem;
-  position: absolute;
-  bottom: -22px;
-  left: 32px;
-`;
-
 function PodcastPage(): JSX.Element {
 
   const [emailIsValid, setEmailIsValid] = useState(true);
   const [emailValue, setEmailValue] = useState('');
+  const [displayMessageEmail, setDisplayMessageEmail] = useState(false);
 
-  useEffect(() => {
+
+  const handleEmail = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    e.preventDefault();
     const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     setEmailIsValid(regex.test(emailValue));
-  }, [emailValue])
+    setDisplayMessageEmail(true);
+    setEmailValue('')
+  };
 
   return (
     <>
@@ -158,7 +156,7 @@ function PodcastPage(): JSX.Element {
           <SocialIcons />
           <Form>
             <InputEmail type="email" placeholder='Email address' />
-            <RequestButton type="button" value="Request Access" />
+            <RequestButton type="submit" value="Request Access" onClick={(e) => handleEmail(e)} />
           </Form>
         </ContentWrapper>
       </SectionWrapperMobile>
@@ -181,8 +179,8 @@ function PodcastPage(): JSX.Element {
           </Description>
           <Form>
             <InputEmail type="email" placeholder='Email address' value={emailValue} onChange={(e) => setEmailValue(e.target.value)} />
-            <RequestButton type="button" value="Request Access" />
-            {!emailIsValid ? null : <EmailError>Oops! Please check your email</EmailError>};
+            <RequestButton type="submit" value="Request Access" onClick={handleEmail} />
+            {displayMessageEmail ? <MessageEmialDisplay isEmailValid={emailIsValid} /> : null}
           </Form>
           <SocialIcons />
         </ContentWrapper>
