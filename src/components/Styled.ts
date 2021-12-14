@@ -48,6 +48,7 @@ const Input = styled.input`
 
 export const InputEmail = styled(Input)`
   background-color: ${COLORS.primary.gray};
+  color: ${COLORS.primary.white};
 
   @media ${QUERIES.tabletAndUp} {
     padding: 16px 32px;
@@ -58,11 +59,16 @@ export const InputEmail = styled(Input)`
 export const RequestButton = styled(Input)`
   background-color: ${COLORS.primary.green};
   cursor: pointer;
+  transition: background-color .3s;
+
+  &:hover {
+    background-color: ${COLORS.neutral.veryLightGray};
+  }
 
   @media ${QUERIES.tabletAndUp} {
     position: absolute;
     top: 50%;
-    right: 4px;
+    right: 24px;
     transform: translateY(-50%);
     padding: 12px 32px;
   }

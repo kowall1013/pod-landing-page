@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { COLORS, QUERIES } from '../constants';
 import SocialIcons from './SocialIcons';
@@ -67,10 +67,34 @@ const Form = styled.form`
 `;
 
 const SectionWrapperDesktop = styled.section`
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-template-rows: 130px 1fr;
-  padding-bottom: 300px;
+  display: none;
+
+  @media ${QUERIES.tabletAndUp} {
+    display: grid;
+    position: relative;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 130px 1fr;
+    padding-bottom: 200px;
+    background-color: ${COLORS.primary.navy};
+   
+
+    &::after {
+      content: url("./assets/desktop/bg-pattern-dots.svg");
+      position: absolute;
+      left: 0;
+      bottom: 0;
+    };
+  }
+
+  @media ${QUERIES.laptopAndUp} {
+    padding: 130px 0 130px 165px;
+
+    &::after {
+      right: 0;
+      left: auto;
+      bottom: 60px;
+    }
+  }
 `;
 
 const ImageWrapper = styled.div`
@@ -80,9 +104,44 @@ const ImageWrapper = styled.div`
   img {
     margin-left: auto;
   }
+
+  @media ${QUERIES.laptopAndUp} {
+    display: none;
+  }
+`;
+
+const ImageDesktopWrapper = styled.div`
+  grid-column: 2 / 3;
+  grid-row: 1 / -1;
+  display: none;
+
+  img {
+    margin-left: auto;
+  }
+
+  @media ${QUERIES.laptopAndUp} {
+    display: block;
+  }
+`;
+
+const EmailError = styled.span`
+  color: hsla(0, 96%, 61%, 1);
+  font-size: 0.75rem;
+  position: absolute;
+  bottom: -22px;
+  left: 32px;
 `;
 
 function PodcastPage(): JSX.Element {
+
+  const [emailIsValid, setEmailIsValid] = useState(true);
+  const [emailValue, setEmailValue] = useState('');
+
+  useEffect(() => {
+    const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    setEmailIsValid(regex.test(emailValue));
+  }, [emailValue])
+
   return (
     <>
       <SectionWrapperMobile>
@@ -108,8 +167,11 @@ function PodcastPage(): JSX.Element {
           <img src="./assets/desktop/logo.svg" alt="" />
         </Logo>
         <ImageWrapper>
-          <img src="./assets/tablet/image-host.jpg" alt="Man singng or making podcast in fornt of microphone" />
+          <img src='./assets/tablet/image-host.jpg' alt="Man singng or making podcast in front of microphone" />
         </ImageWrapper>
+        <ImageDesktopWrapper>
+          <img src='./assets/desktop/image-host.jpg' alt="Man singng or making podcast in front of microphone" />
+        </ImageDesktopWrapper>
         <ContentWrapper>
           <Title>
             Publish your podcasts <span>everywhere.</span>
@@ -118,8 +180,9 @@ function PodcastPage(): JSX.Element {
             Upload your audio to Pod with a single click. We’ll then distribute your podcast to Spotify, Apple Podcasts, Google Podcasts, Pocket Casts and more!
           </Description>
           <Form>
-            <InputEmail type="email" placeholder='Email address' />
+            <InputEmail type="email" placeholder='Email address' value={emailValue} onChange={(e) => setEmailValue(e.target.value)} />
             <RequestButton type="button" value="Request Access" />
+            {!emailIsValid ? null : <EmailError>Oops! Please check your email</EmailError>};
           </Form>
           <SocialIcons />
         </ContentWrapper>
